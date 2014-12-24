@@ -1,0 +1,8 @@
+hello\config\Application.class
+hello\repo\UserRepo.class
+hello\json\Page.class
+hello\controller\UserCtrl.class
+hello\json\UserPojo.class
+hello\model\User.class
+hello\service\FacebookLookupService.class
+hello\service\UserService.class
