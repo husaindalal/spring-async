@@ -19,4 +19,7 @@ public interface DayRepo extends JpaRepository<Day, Long>{
 	
 	@Query("SELECT d FROM Day d WHERE d.day >= :today")
 	List<Day> findDaysGreaterThan(@Param("today") LocalDate today);
+
+	@Query("SELECT d FROM Day d WHERE d.day >= :weekStart and d.day <= :weekEnd")
+	List<Day>  findDaysBetween(@Param("weekStart") LocalDate weekStart, @Param("weekEnd") LocalDate weekEnd);
 }
