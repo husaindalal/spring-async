@@ -1,6 +1,9 @@
 package hello.model;
 
+import hello.model.util.YNBooleanConverter;
+
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -29,7 +32,8 @@ public class Rsvp implements Serializable {
 	private short thaliCount;
 
 	@Column(name="thali_picked")
-	private String thaliPicked;
+	@Convert(converter=YNBooleanConverter.class)
+	private Boolean thaliPicked;
 
 	@Column(name="thali_size")
 	private String thaliSize;
@@ -46,6 +50,17 @@ public class Rsvp implements Serializable {
 
 	public Rsvp() {
 	}
+	
+	@PrePersist
+	protected void init() {
+		thaliCount = 0;
+		thaliSize = "S";
+		thaliPicked = false;
+		adultCount = 0;
+		childCount = 0;
+		
+	}
+
 
 	public Long getRsvpId() {
 		return this.rsvpId;
@@ -87,11 +102,11 @@ public class Rsvp implements Serializable {
 		this.thaliCount = thaliCount;
 	}
 
-	public String getThaliPicked() {
+	public Boolean getThaliPicked() {
 		return this.thaliPicked;
 	}
 
-	public void setThaliPicked(String thaliPicked) {
+	public void setThaliPicked(Boolean thaliPicked) {
 		this.thaliPicked = thaliPicked;
 	}
 

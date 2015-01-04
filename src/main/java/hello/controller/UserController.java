@@ -27,7 +27,7 @@ public class UserController {
 
 	/**
 	 * Create a new user and save it in the database. mvn spring-boot:run
-	 * http://localhost:8080/create?name=husain&email=husain@gmail.com
+	 * http://localhost:8080/createuser?name=husain&email=husain@gmail.com
 	 * 
 	 * @param email
 	 *            user email
@@ -35,7 +35,7 @@ public class UserController {
 	 *            use name
 	 * @return a string describing if the user is successfully created or not.
 	 */
-	@RequestMapping("/create")
+	@RequestMapping("/createuser")
 	@ResponseBody
 	public String create(@RequestParam("name") String name, @RequestParam("email") String email) {
 		long start = System.currentTimeMillis();
@@ -43,8 +43,9 @@ public class UserController {
 		User user = null;
 
 		try {
-			user = userSvc.create(new UserPojo(name, email));
+			user = userSvc.createUser(new UserPojo(name, email));
 		} catch (Exception ex) {
+			LOG.error("Error creating the user: ", ex );
 			return "Error creating the user: " + ex.toString();
 		}
 		LOG.info("Total time: " + (System.currentTimeMillis() - start));

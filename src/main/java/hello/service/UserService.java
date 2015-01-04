@@ -1,16 +1,22 @@
 package hello.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Future;
 
 import javax.transaction.Transactional;
 
 import hello.controller.UserController;
 import hello.json.UserPojo;
+import hello.model.Role;
 import hello.model.User;
 import hello.model.UserAud;
 import hello.model.UserCalc;
+import hello.model.UserDefault;
+import hello.repo.RoleRepo;
 import hello.repo.UserAudRepo;
 import hello.repo.UserCalcRepo;
+import hello.repo.UserDefaultRepo;
 import hello.repo.UserRepo;
 
 import org.slf4j.Logger;
@@ -29,53 +35,42 @@ public class UserService {
 	@Autowired
 	private UserRepo userRepo;
 	
-	@Autowired
-	private UserAudRepo userAudRepo;
-
-	@Autowired
-	private UserCalcService userCalcSvc;
+//	@Autowired
+//	private UserAudRepo userAudRepo;
+//
+//	@Autowired
+//	private UserDefaultRepo userDefaultRepo;
+//
+//	@Autowired
+//	private RoleRepo roleRepo;
+//
+//	@Autowired
+//	private UserCalcService userCalcSvc;
 
 	@Transactional
-	public User create(UserPojo userPojo) throws Exception {
+	public User createUser(UserPojo userPojo) throws Exception {
 		long start = System.currentTimeMillis();
-		User user = createUser(userPojo);
-		LOG.info("User time: " + (System.currentTimeMillis() - start));
-		createUserAud(user);
-		LOG.info("Aud time: " + (System.currentTimeMillis() - start));
+		
+		User user = new User();
+		user.setName(userPojo.getName());
+		user.setEmail(userPojo.getEmail());
+		//user.setPassword("welcome1"); //Set in entity
+		
+		user.addRole(new Role());
+		
+		UserDefault def = new UserDefault();
+		def.setUser(user);
+		user.setUserDefault(def);
+
+		//TODO: user.addRsvp(rsvp) //All days from this week
+
+		userRepo.save(user);
+
 		//async calcUser
-		userCalcSvc.calcUser(user);
+		//userCalcSvc.calcUser(user);
 		LOG.info("Calc time: " + (System.currentTimeMillis() - start));
 		return user;
 	}
 	
-	private User createUser(UserPojo userPojo) throws Exception  {
-		User user = new User();
-		user.setName(userPojo.getName());
-		user.setEmail(userPojo.getEmail());
-		user.setPassword("welcome1");
-		userRepo.save(user);
-
-		return user;
-	}
-	
-	private UserAud createUserAud(User newUser) {
-		UserAud userAud = new UserAud();
-
-		User oldUser = userRepo.findOne(newUser.getUserId());
-		if(oldUser != null) {
-			userAud.setNameB(oldUser.getName()) ;
-			userAud.setEmailB(oldUser.getEmail()) ;
-		}
-
-		userAud.setNameA(newUser.getName()) ;
-		userAud.setEmailA(newUser.getEmail()) ;
-
-		userAudRepo.save(userAud);
-		
-		return userAud;
-	}
-	
-	
-
 
 }

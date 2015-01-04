@@ -60,7 +60,7 @@ public class Day implements Serializable {
 	private String time;
 
 	//bi-directional many-to-one association to Rsvp
-	@OneToMany(mappedBy="day")
+	@OneToMany(mappedBy="day", cascade=CascadeType.ALL)
 	private List<Rsvp> rsvps;
 
 	public Day() {

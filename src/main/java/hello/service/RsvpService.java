@@ -53,23 +53,21 @@ public class RsvpService {
 			if(day == null) {
 				day = new Day();
 				day.setDay(date);
-				//day.set //done in entity
+				
+				//TODO: day.setRsvps();
+				
 				dayRepo.save(day);
+				
+				//add rsvp entry for each user
 			}
+			
 			date = date.plusDays(1);
 		}
+		
+		
 		
 		LOG.info("Calc time: " + (System.currentTimeMillis() - start));
 	}
 	
-	private User createUser(UserPojo userPojo) throws Exception  {
-		User user = new User();
-		user.setName(userPojo.getName());
-		user.setEmail(userPojo.getEmail());
-		//user.setPassword("welcome1");
-		userRepo.save(user);
-
-		return user;
-	}
 
 }

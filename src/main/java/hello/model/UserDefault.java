@@ -1,6 +1,7 @@
 package hello.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -17,7 +18,7 @@ public class UserDefault implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="default_id")
-	private int defaultId;
+	private Long defaultId;
 
 	@Column(name="adult_count")
 	private short adultCount;
@@ -33,19 +34,27 @@ public class UserDefault implements Serializable {
 	@Column(name="thali_size")
 	private String thaliSize;
 
-	//bi-directional many-to-one association to User
-	@ManyToOne
-	@JoinColumn(name="user_id")
+	//bi-directional one-to-one association to User
+	@OneToOne(mappedBy="userDefault")
 	private User user;
 
 	public UserDefault() {
 	}
 
-	public int getDefaultId() {
+	@PrePersist
+	protected void init() {
+		thaliCount = 0;
+		thaliSize = "S";
+		adultCount = 0;
+		childCount = 0;
+		//location = "MASJID";
+	}
+
+	public Long getDefaultId() {
 		return this.defaultId;
 	}
 
-	public void setDefaultId(int defaultId) {
+	public void setDefaultId(Long defaultId) {
 		this.defaultId = defaultId;
 	}
 

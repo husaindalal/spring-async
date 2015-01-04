@@ -45,6 +45,7 @@ public class RsvpController {
 		try {
 			rsvpSvc.createDays((new LocalDate()).plusMonths(4));
 		} catch (Exception ex) {
+			LOG.error("Error creating the days: ", ex );
 			return "Error creating days: " + ex.toString();
 		}
 		LOG.info("Total time: " + (System.currentTimeMillis() - start));

@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -46,16 +47,17 @@ public class User implements Serializable {
 	private BigInteger phone2;
 
 	//bi-directional many-to-one association to Role
-	@OneToMany(mappedBy="user", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="user", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private List<Role> roles;
 	
 	//bi-directional many-to-one association to Rsvp
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
 	private List<Rsvp> rsvps;
 
-	//bi-directional many-to-one association to UserDefault
-	@OneToMany(mappedBy="user")
-	private List<UserDefault> userDefaults;
+	//bi-directional one-to-one association to UserDefault
+	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@JoinColumn(name="user_id", referencedColumnName="user_id")
+	private UserDefault userDefault;
 
 
 
@@ -126,6 +128,9 @@ public class User implements Serializable {
 	}
 
 	public List<Role> getRoles() {
+		if(this.roles == null) {
+			this.roles = new ArrayList<Role>();
+		}
 		return this.roles;
 	}
 
@@ -149,6 +154,10 @@ public class User implements Serializable {
 
 	
 	public List<Rsvp> getRsvps() {
+		if(this.rsvps == null) {
+			this.rsvps = new ArrayList<Rsvp>();
+		}
+
 		return this.rsvps;
 	}
 
@@ -170,28 +179,15 @@ public class User implements Serializable {
 		return rsvp;
 	}
 
-	public List<UserDefault> getUserDefaults() {
-		return this.userDefaults;
+	public UserDefault getUserDefault() {
+		return this.userDefault;
 	}
 
-	public void setUserDefaults(List<UserDefault> userDefaults) {
-		this.userDefaults = userDefaults;
+	public void setUserDefault(UserDefault userDefault) {
+		this.userDefault = userDefault;
 	}
 
-	public UserDefault addUserDefault(UserDefault userDefault) {
-		getUserDefaults().add(userDefault);
-		userDefault.setUser(this);
 
-		return userDefault;
-	}
-
-	public UserDefault removeUserDefault(UserDefault userDefault) {
-		getUserDefaults().remove(userDefault);
-		userDefault.setUser(null);
-
-		return userDefault;
-	}
-//	
 //	@Override
 //    public String toString() {
 //        return "User{" +
