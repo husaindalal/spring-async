@@ -15,10 +15,20 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+
+/**
+ * 
+ * @author husaind
+ * 
+ * mvn spring-boot:run
+ * 
+ * http://localhost:8080/create?name=husain&email=husain@gmail
+ */
+
 @Configuration
 @EnableAutoConfiguration
 //@PropertySource("/apps/conf/app.properties") //Use this instead of application.properties
-@ComponentScan({"hello.service", "hello.controller"}) 
+@ComponentScan({"hello.service", "hello.controller", "hello.config"}) 
 
 @EnableJpaRepositories("hello.repo") //not really needed after AutoConfiguration
 @EntityScan("hello.model") //not really needed after AutoConfiguration

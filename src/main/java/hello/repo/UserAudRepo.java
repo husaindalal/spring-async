@@ -1,6 +1,5 @@
 package hello.repo;
 
-import hello.model.User;
 import hello.model.UserAud;
 
 import org.springframework.data.jpa.repository.JpaRepository;

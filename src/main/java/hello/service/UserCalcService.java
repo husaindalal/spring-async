@@ -4,7 +4,7 @@ import java.util.concurrent.Future;
 
 import javax.transaction.Transactional;
 
-import hello.controller.UserCtrl;
+import hello.controller.UserController;
 import hello.json.UserPojo;
 import hello.model.User;
 import hello.model.UserAud;

@@ -1,18 +1,24 @@
 package hello.service;
 
+import java.util.Calendar;
 import java.util.concurrent.Future;
 
 import javax.transaction.Transactional;
 
 import hello.controller.UserController;
 import hello.json.UserPojo;
+import hello.model.Day;
 import hello.model.User;
 import hello.model.UserAud;
 import hello.model.UserCalc;
+import hello.repo.DayRepo;
+import hello.repo.RsvpRepo;
 import hello.repo.UserAudRepo;
 import hello.repo.UserCalcRepo;
 import hello.repo.UserRepo;
 
+import org.apache.commons.lang3.time.DateUtils;
+import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,60 +28,48 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
-public class UserService {
+public class RsvpService {
 	
-	private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(RsvpService.class);
 
 	@Autowired
 	private UserRepo userRepo;
 	
 	@Autowired
-	private UserAudRepo userAudRepo;
+	private DayRepo dayRepo;
 
 	@Autowired
-	private UserCalcService userCalcSvc;
+	private RsvpRepo rsvpRepo;
+
 
 	@Transactional
-	public User create(UserPojo userPojo) throws Exception {
+	public void createDays(LocalDate dateUpto) throws Exception {
 		long start = System.currentTimeMillis();
-		User user = createUser(userPojo);
-		LOG.info("User time: " + (System.currentTimeMillis() - start));
-		createUserAud(user);
-		LOG.info("Aud time: " + (System.currentTimeMillis() - start));
-		//async calcUser
-		userCalcSvc.calcUser(user);
+		
+		LocalDate date = new LocalDate();
+		while(date.isBefore(dateUpto)) {
+			LOG.info("");
+			Day day = dayRepo.findByDay(date);
+			if(day == null) {
+				day = new Day();
+				day.setDay(date);
+				//day.set //done in entity
+				dayRepo.save(day);
+			}
+			date = date.plusDays(1);
+		}
+		
 		LOG.info("Calc time: " + (System.currentTimeMillis() - start));
-		return user;
 	}
 	
 	private User createUser(UserPojo userPojo) throws Exception  {
 		User user = new User();
 		user.setName(userPojo.getName());
 		user.setEmail(userPojo.getEmail());
-		user.setPassword("welcome1");
+		//user.setPassword("welcome1");
 		userRepo.save(user);
 
 		return user;
 	}
-	
-	private UserAud createUserAud(User newUser) {
-		UserAud userAud = new UserAud();
-
-		User oldUser = userRepo.findOne(newUser.getUserId());
-		if(oldUser != null) {
-			userAud.setNameB(oldUser.getName()) ;
-			userAud.setEmailB(oldUser.getEmail()) ;
-		}
-
-		userAud.setNameA(newUser.getName()) ;
-		userAud.setEmailA(newUser.getEmail()) ;
-
-		userAudRepo.save(userAud);
-		
-		return userAud;
-	}
-	
-	
-
 
 }

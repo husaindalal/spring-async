@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class UserCtrl {
+public class UserController {
 
-	private static final Logger LOG = LoggerFactory.getLogger(UserCtrl.class);
+	private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired
 	private UserService userSvc;
@@ -49,7 +49,7 @@ public class UserCtrl {
 		}
 		LOG.info("Total time: " + (System.currentTimeMillis() - start));
 
-		return "User succesfully created! " + user.getId();
+		return "User succesfully created! " + user.getUserId();
 	}
 
 	/**
