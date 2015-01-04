@@ -8,17 +8,21 @@ import javax.transaction.Transactional;
 
 import hello.controller.UserController;
 import hello.json.UserPojo;
+import hello.model.Day;
 import hello.model.Role;
+import hello.model.Rsvp;
 import hello.model.User;
 import hello.model.UserAud;
 import hello.model.UserCalc;
 import hello.model.UserDefault;
+import hello.repo.DayRepo;
 import hello.repo.RoleRepo;
 import hello.repo.UserAudRepo;
 import hello.repo.UserCalcRepo;
 import hello.repo.UserDefaultRepo;
 import hello.repo.UserRepo;
 
+import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +38,10 @@ public class UserService {
 
 	@Autowired
 	private UserRepo userRepo;
+	
+	@Autowired
+	private DayRepo dayRepo;
+
 	
 //	@Autowired
 //	private UserAudRepo userAudRepo;
@@ -62,7 +70,15 @@ public class UserService {
 		def.setUser(user);
 		user.setUserDefault(def);
 
-		//TODO: user.addRsvp(rsvp) //All days from this week
+		List<Day> days = dayRepo.findDaysGreaterThan(LocalDate.now());
+		List<Rsvp> rsvps = new ArrayList<Rsvp>();
+		for(Day day : days) {
+			Rsvp rsvp = new Rsvp();
+			rsvp.setUser(user);
+			rsvp.setDay(day);
+			rsvps.add(rsvp);
+		}
+		user.setRsvps(rsvps); //All days from this week
 
 		userRepo.save(user);
 

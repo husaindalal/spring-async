@@ -1,6 +1,8 @@
 package hello.service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.concurrent.Future;
 
 import javax.transaction.Transactional;
@@ -8,6 +10,7 @@ import javax.transaction.Transactional;
 import hello.controller.UserController;
 import hello.json.UserPojo;
 import hello.model.Day;
+import hello.model.Rsvp;
 import hello.model.User;
 import hello.model.UserAud;
 import hello.model.UserCalc;
@@ -54,7 +57,7 @@ public class RsvpService {
 				day = new Day();
 				day.setDay(date);
 				
-				//TODO: day.setRsvps();
+				day.setRsvps(getFutureRsvps(day));
 				
 				dayRepo.save(day);
 				
@@ -67,6 +70,19 @@ public class RsvpService {
 		
 		
 		LOG.info("Calc time: " + (System.currentTimeMillis() - start));
+	}
+
+
+	private List<Rsvp> getFutureRsvps(Day day) {
+		List<Rsvp> rsvps = new ArrayList<Rsvp>();
+		List<User> users = userRepo.findAll();
+		for(User user : users) {
+			Rsvp rsvp = new Rsvp() ;
+			rsvp.setUser(user);
+			rsvp.setDay(day);
+			rsvps.add(rsvp);
+		}
+		return rsvps;
 	}
 	
 
