@@ -1,38 +1,27 @@
 package hello.service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.concurrent.Future;
-
-import javax.transaction.Transactional;
-
-import hello.controller.UserController;
 import hello.json.DayPojo;
-import hello.json.UserPojo;
-import hello.json.WeekPojo;
+import hello.json.RsvpPojo;
+import hello.json.WeekDayPojo;
+import hello.json.WeekRsvpPojo;
 import hello.model.Day;
 import hello.model.Rsvp;
 import hello.model.User;
-import hello.model.UserAud;
-import hello.model.UserCalc;
 import hello.repo.DayRepo;
 import hello.repo.RsvpRepo;
-import hello.repo.UserAudRepo;
-import hello.repo.UserCalcRepo;
 import hello.repo.UserRepo;
 import hello.service.util.DateUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.transaction.Transactional;
+
 import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class RsvpService {
@@ -89,17 +78,17 @@ public class RsvpService {
 	}
 
 	@Transactional
-	public List<WeekPojo> getDays() throws Exception {
+	public List<WeekDayPojo> getDays() throws Exception {
 		long start = System.currentTimeMillis();
 
-		List<WeekPojo> weeks = new ArrayList<WeekPojo>();
+		List<WeekDayPojo> weeks = new ArrayList<WeekDayPojo>();
 
 		LocalDate date = new LocalDate();
 		for (int i = 0; i < 4; i++) {
 			LocalDate weekStart = dateUtil.startOfWeek(date);
 			LocalDate weekEnd = dateUtil.endOfWeek(date);
 
-			WeekPojo weekPojo = new WeekPojo();
+			WeekDayPojo weekPojo = new WeekDayPojo();
 			weekPojo.setWeekId(dateUtil.weekToId(weekStart));
 			weekPojo.setWeek(dateUtil.weekToString(weekStart, weekEnd));
 
@@ -109,27 +98,6 @@ public class RsvpService {
 			date = date.plusWeeks(1);
 		}
 
-		// LocalDate weekStart= today.dayOfWeek().withMinimumValue();
-		// LocalDate weekEnd = today.dayOfWeek().withMaximumValue();
-		//
-		// LOG.error("Week : "+dayFormat2.print(weekStart)+" - "+dayFormat2.print(weekEnd));
-		//
-		// weekPojo.setWeekId(weekFormat.print(today));
-		// weekPojo.setWeek("Week : "+dayFormat.print(weekStart)+" - "+dayFormat.print(weekEnd));
-		//
-		// today = new LocalDate().plusDays(1);
-		// weekStart= today.dayOfWeek().withMinimumValue();
-		// weekEnd = today.dayOfWeek().withMaximumValue();
-		//
-		// LOG.error("Week+1 : "+dayFormat.print(weekStart)+" - "+dayFormat.print(weekEnd));
-		//
-		// today = new LocalDate().plusDays(2);
-		// weekStart= today.dayOfWeek().withMinimumValue();
-		// weekEnd = today.dayOfWeek().withMaximumValue();
-		//
-		// LOG.error("Week+2 : "+dayFormat.print(weekStart)+" - "+dayFormat.print(weekEnd));
-		//
-		//
 		LOG.info("Calc time: " + (System.currentTimeMillis() - start));
 		return weeks;
 	}
@@ -151,5 +119,60 @@ public class RsvpService {
 
 		return dayPojos;
 	}
+
+	public List<WeekRsvpPojo> getMyRsvp() {
+		
+		long start = System.currentTimeMillis();
+
+		List<WeekRsvpPojo> weeks = new ArrayList<WeekRsvpPojo>();
+
+		LocalDate date = new LocalDate();
+		for (int i = 0; i < 4; i++) {
+			LocalDate weekStart = dateUtil.startOfWeek(date);
+			LocalDate weekEnd = dateUtil.endOfWeek(date);
+
+			WeekRsvpPojo weekPojo = new WeekRsvpPojo();
+			weekPojo.setWeekId(dateUtil.weekToId(weekStart));
+			weekPojo.setWeek(dateUtil.weekToString(weekStart, weekEnd));
+
+			weekPojo.setRsvps(getMyRsvpPojos(weekStart, weekEnd));
+
+			weeks.add(weekPojo);
+			date = date.plusWeeks(1);
+		}
+
+		LOG.info("Calc time: " + (System.currentTimeMillis() - start));
+		return weeks;
+	}
+	
+	List<RsvpPojo> getMyRsvpPojos(LocalDate weekStart, LocalDate weekEnd) {
+		List<RsvpPojo> rsvpPojos = new ArrayList<RsvpPojo>();
+		
+		//User currentUser = userRepo.findOne(5L);
+		Long currentUserId = 5L;  //TODO: get from security
+
+		List<Rsvp> rsvps = rsvpRepo.findMyRsvpBetween(dateUtil.dayToDBString(weekStart), dateUtil.dayToDBString(weekEnd), currentUserId);
+		LOG.info("rsvpRepo string "+rsvps.size()+"  "+dateUtil.dayToDBString(weekStart)+"  "+dateUtil.dayToDBString(weekEnd)+"  "+currentUserId);
+		
+		
+		for (Rsvp rsvp : rsvps) {
+			RsvpPojo rsvpPojo = new RsvpPojo();
+			rsvpPojo.setRsvpId(rsvp.getRsvpId());
+			rsvpPojo.setDay(dateUtil.dayToLongString(rsvp.getDay().getDay()));
+			rsvpPojo.setMenu(rsvp.getDay().getMenu());
+			rsvpPojo.setThaliCount(rsvp.getThaliCount());
+			rsvpPojo.setThaliSize(rsvp.getThaliSize());
+			rsvpPojo.setLocation(rsvp.getLocation());
+			rsvpPojo.setThaliPicked(rsvp.getThaliPicked());
+			
+			rsvpPojos.add(rsvpPojo);
+		}
+
+		return rsvpPojos;
+	}
+
+//	public List<WeekRsvpPojo> getAllRsvp() {
+//		return null;
+//	}
 
 }

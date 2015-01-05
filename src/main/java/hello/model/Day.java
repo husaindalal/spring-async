@@ -3,18 +3,21 @@ package hello.model;
 import hello.model.util.YNBooleanConverter;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
-
-
 import org.joda.time.LocalDate;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 
 /**

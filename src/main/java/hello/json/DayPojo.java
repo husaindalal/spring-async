@@ -1,6 +1,5 @@
 package hello.json;
 
-import org.joda.time.LocalDate;
 
 public class DayPojo {
 	private Long dayId;

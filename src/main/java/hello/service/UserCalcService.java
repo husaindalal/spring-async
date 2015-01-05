@@ -1,25 +1,14 @@
 package hello.service;
 
-import java.util.concurrent.Future;
-
-import javax.transaction.Transactional;
-
-import hello.controller.UserController;
-import hello.json.UserPojo;
 import hello.model.User;
-import hello.model.UserAud;
 import hello.model.UserCalc;
-import hello.repo.UserAudRepo;
 import hello.repo.UserCalcRepo;
-import hello.repo.UserRepo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class UserCalcService {

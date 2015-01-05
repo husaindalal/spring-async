@@ -11,6 +11,7 @@ public class DateUtils {
     DateTimeFormatter weekFormat = DateTimeFormat.forPattern("w");
     DateTimeFormatter dayShortFormat = DateTimeFormat.forPattern("MMM dd");
     DateTimeFormatter dayLongFormat = DateTimeFormat.forPattern("EEE, MMM dd");
+    DateTimeFormatter dayDBFormat = DateTimeFormat.forPattern("yyyy-MM-dd");
 
 	
 	public LocalDate startOfWeek(LocalDate date) {
@@ -35,6 +36,10 @@ public class DateUtils {
 	
 	public String dayToLongString(LocalDate date) {
 	    return dayLongFormat.print(date);
+	}
+
+	public String dayToDBString(LocalDate date) {
+		return dayDBFormat.print(date);
 	}
 	
 	

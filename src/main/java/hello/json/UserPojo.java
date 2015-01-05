@@ -1,9 +1,6 @@
 package hello.json;
 
-import javax.validation.constraints.NotNull;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

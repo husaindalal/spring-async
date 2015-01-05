@@ -1,35 +1,24 @@
 package hello.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Future;
-
-import javax.transaction.Transactional;
-
-import hello.controller.UserController;
 import hello.json.UserPojo;
 import hello.model.Day;
 import hello.model.Role;
 import hello.model.Rsvp;
 import hello.model.User;
-import hello.model.UserAud;
-import hello.model.UserCalc;
 import hello.model.UserDefault;
 import hello.repo.DayRepo;
-import hello.repo.RoleRepo;
-import hello.repo.UserAudRepo;
-import hello.repo.UserCalcRepo;
-import hello.repo.UserDefaultRepo;
 import hello.repo.UserRepo;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class UserService {

@@ -2,7 +2,6 @@ package hello.controller;
 
 import hello.json.UserPojo;
 import hello.model.User;
-import hello.repo.UserRepo;
 import hello.service.UserService;
 
 import org.slf4j.Logger;

@@ -2,7 +2,7 @@ package hello.json;
 
 import java.util.List;
 
-public class WeekPojo {
+public class WeekDayPojo {
 	private String weekId;
 	private String week;
 	private List<DayPojo> days;

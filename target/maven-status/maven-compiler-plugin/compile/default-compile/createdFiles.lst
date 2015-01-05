@@ -5,9 +5,6 @@ hello\repo\UserCalcRepo.class
 hello\config\CustomUserDetailsService.class
 hello\json\UserPojo.class
 hello\config\SecurityConfig.class
-hello\service\UserService.class
 hello\model\User.class
-hello\repo\UserRepo.class
 hello\model\UserAud.class
-hello\service\UserCalcService.class
 hello\model\Role.class
