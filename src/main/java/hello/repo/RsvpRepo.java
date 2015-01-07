@@ -14,13 +14,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RsvpRepo extends JpaRepository<Rsvp, Long>{
 	
-	@Query(nativeQuery = true, value = "SELECT r.* FROM rsvp r, DAYs d WHERE r.day_id = d.day_id and d.day >= :weekStart AND d.day <= :weekEnd AND r.user_id = :currentUserId")
-	List<Rsvp> findMyRsvpBetween(@Param("weekStart") LocalDate weekStart, @Param("weekEnd") LocalDate weekEnd,  @Param("currentUserId") Long currentUserId);
-
-	@Query(nativeQuery = true, value = "SELECT r.* FROM rsvp r, DAYs d WHERE r.day_id = d.day_id and d.day >= :weekStart AND d.day <= :weekEnd AND r.user_id = :currentUserId")
+	@Query(nativeQuery = true, value = "SELECT r.* FROM rsvp r, days d WHERE r.day_id = d.day_id and d.day >= :weekStart AND d.day <= :weekEnd AND r.user_id = :currentUserId")
 	List<Rsvp> findMyRsvpBetween(@Param("weekStart") String weekStart, @Param("weekEnd") String weekEnd,  @Param("currentUserId") Long currentUserId);
 
-	@Query("SELECT d FROM Rsvp d WHERE d.day >= :weekStart and d.day <= :weekEnd")
-	List<Rsvp> findAllRsvpBetween(@Param("weekStart") Day weekStart, @Param("weekEnd") Day weekEnd);
+	@Query(nativeQuery = true, value = "SELECT r.* FROM rsvp r, days d WHERE r.day_id = d.day_id and d.day >= :weekStart AND d.day <= :weekEnd order by d.day, r.location ")
+	List<Rsvp> findAllRsvpBetween(@Param("weekStart") String weekStart, @Param("weekEnd") String weekEnd);
 
+	@Query(nativeQuery = true, value = "SELECT r.* FROM rsvp r, days d WHERE r.day_id = d.day_id and d.day = :day order by d.day, r.location ")
+	List<Rsvp> findAllRsvpForDay(@Param("day") String day);
 }

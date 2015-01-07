@@ -6,6 +6,7 @@ public class WeekRsvpPojo {
 	private String weekId;
 	private String week;
 	private List<RsvpPojo> rsvps;
+	private List<TotalRsvpPojo> totalRsvps;
 	
 	
 	public String getWeekId() {
@@ -25,6 +26,12 @@ public class WeekRsvpPojo {
 	}
 	public void setRsvps(List<RsvpPojo> rsvps) {
 		this.rsvps = rsvps;
+	}
+	public List<TotalRsvpPojo> getTotalRsvps() {
+		return totalRsvps;
+	}
+	public void setTotalRsvps(List<TotalRsvpPojo> totalRsvps) {
+		this.totalRsvps = totalRsvps;
 	}
 
 	

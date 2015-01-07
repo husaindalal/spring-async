@@ -6,6 +6,7 @@ public class RsvpPojo {
 	private String day;
 	private String menu;
 	private short thaliCount;
+	private short largeThaliCount;
 	private String thaliSize;
 	private String location;
 	private Boolean thaliPicked;
@@ -34,6 +35,13 @@ public class RsvpPojo {
 	}
 	public void setThaliCount(short thaliCount) {
 		this.thaliCount = thaliCount;
+	}
+	
+	public short getLargeThaliCount() {
+		return largeThaliCount;
+	}
+	public void setLargeThaliCount(short largeThaliCount) {
+		this.largeThaliCount = largeThaliCount;
 	}
 	public String getThaliSize() {
 		return thaliSize;

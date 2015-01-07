@@ -39,6 +39,9 @@ public class Rsvp implements Serializable {
 	@Column(name="thali_count")
 	private short thaliCount;
 
+	@Column(name="large_thali_count")
+	private short largeThaliCount;
+
 	@Column(name="thali_picked")
 	@Convert(converter=YNBooleanConverter.class)
 	private Boolean thaliPicked;
@@ -59,9 +62,19 @@ public class Rsvp implements Serializable {
 	public Rsvp() {
 	}
 	
+	
+	
+	@Override
+	public String toString() {
+		return "Rsvp [rsvpId=" + rsvpId + ", day=" + day + ", user=" + user + "]";
+	}
+
+
+
 	@PrePersist
 	protected void init() {
 		thaliCount = 0;
+		largeThaliCount = 0;
 		thaliSize = "S";
 		thaliPicked = false;
 		adultCount = 0;
@@ -108,6 +121,15 @@ public class Rsvp implements Serializable {
 
 	public void setThaliCount(short thaliCount) {
 		this.thaliCount = thaliCount;
+	}
+
+	
+	public short getLargeThaliCount() {
+		return largeThaliCount;
+	}
+
+	public void setLargeThaliCount(short largeThaliCount) {
+		this.largeThaliCount = largeThaliCount;
 	}
 
 	public Boolean getThaliPicked() {
