@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDate;
+
 
 @Entity
 @Table(name="total_rsvp")
@@ -12,7 +15,8 @@ import javax.persistence.Table;
 public class TotalRsvp {
 	
 	@Id
-	private String day;
+	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+	private LocalDate day;
 	
 	private String menu;
 	
@@ -25,10 +29,10 @@ public class TotalRsvp {
 	private short largeThaliCount;
 	
 	
-	public String getDay() {
+	public LocalDate getDay() {
 		return day;
 	}
-	public void setDay(String day) {
+	public void setDay(LocalDate day) {
 		this.day = day;
 	}
 	public String getMenu() {

@@ -1,5 +1,6 @@
 package hello.controller;
 
+import hello.json.TotalRsvpPojo;
 import hello.json.WeekDayPojo;
 import hello.json.WeekRsvpPojo;
 import hello.service.RsvpService;
@@ -76,7 +77,7 @@ public class RsvpController {
 	
 	
 	/**
-	 * http://localhost:8080/days
+	 * http://localhost:8080/myrsvp
 	 * @return
 	 */
 	@RequestMapping("/myrsvp")
@@ -97,26 +98,26 @@ public class RsvpController {
 	}
 	
 	
-//	/**
-//	 * http://localhost:8080/days
-//	 * @return
-//	 */
-//	@RequestMapping("/allrsvp")
-//	@ResponseBody
-//	public List<WeekDayPojo> getAllRsvp() {
-//		long start = System.currentTimeMillis();
-//
-//		List<WeekDayPojo> weeks;
-//		try {
-//			weeks = rsvpSvc.getAllRsvp();
-//		} catch (Exception ex) {
-//			LOG.error("Error creating the days: ", ex );
-//			return null;
-//		}
-//		LOG.info("Total time: " + (System.currentTimeMillis() - start));
-//
-//		return weeks ;
-//	}
+	/**
+	 * http://localhost:8080/allrsvp
+	 * @return
+	 */
+	@RequestMapping("/allrsvp")
+	@ResponseBody
+	public List<WeekRsvpPojo> getAllRsvp() {
+		long start = System.currentTimeMillis();
+
+		List<WeekRsvpPojo> weeks;
+		try {
+			weeks = rsvpSvc.getAllRsvp();
+		} catch (Exception ex) {
+			LOG.error("Error creating the days: ", ex );
+			return null;
+		}
+		LOG.info("Total time: " + (System.currentTimeMillis() - start));
+
+		return weeks ;
+	}
 	
 	
 }

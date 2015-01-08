@@ -68,7 +68,7 @@ public class User implements Serializable {
 	//bi-directional one-to-one association to UserDefault
 	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name="user_id", referencedColumnName="user_id")
-	private UserDefault userDefault;
+	private UserDefaults userDefault;
 
 
 
@@ -190,11 +190,11 @@ public class User implements Serializable {
 		return rsvp;
 	}
 
-	public UserDefault getUserDefault() {
+	public UserDefaults getUserDefault() {
 		return this.userDefault;
 	}
 
-	public void setUserDefault(UserDefault userDefault) {
+	public void setUserDefault(UserDefaults userDefault) {
 		this.userDefault = userDefault;
 	}
 
