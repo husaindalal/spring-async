@@ -1,7 +1,6 @@
 package hello.service;
 
 import hello.json.DayPojo;
-import hello.json.DefaultsPojo;
 import hello.json.RsvpPojo;
 import hello.json.TotalRsvpPojo;
 import hello.json.WeekDayPojo;
@@ -10,11 +9,9 @@ import hello.model.Day;
 import hello.model.Rsvp;
 import hello.model.TotalRsvp;
 import hello.model.User;
-import hello.model.UserDefaults;
 import hello.repo.DayRepo;
 import hello.repo.RsvpRepo;
 import hello.repo.TotalRsvpRepo;
-import hello.repo.UserDefaultsRepo;
 import hello.repo.UserRepo;
 import hello.service.util.DateUtils;
 
@@ -48,10 +45,6 @@ public class RsvpService {
 
 	@Autowired
 	private TotalRsvpRepo totalRsvpRepo;
-
-	@Autowired
-	private UserDefaultsRepo userDefRepo;
-	
 
 	@Autowired
 	private DateUtils dateUtil;
@@ -208,7 +201,7 @@ public class RsvpService {
 			List<TotalRsvpPojo> totalRsvpPojos = new ArrayList<TotalRsvpPojo>();
 			for (TotalRsvp totalRsvp : totalRsvps) {
 				TotalRsvpPojo totalRsvpPojo = new TotalRsvpPojo();
-				totalRsvpPojo.setDay(dateUtil.dayToLongString(totalRsvp.getDay()));
+				totalRsvpPojo.setDay(totalRsvp.getDay());
 				totalRsvpPojo.setMenu(totalRsvp.getMenu());
 				totalRsvpPojo.setLocation(totalRsvp.getLocation());
 				totalRsvpPojo.setThaliCount(totalRsvp.getThaliCount());
@@ -226,20 +219,6 @@ public class RsvpService {
 		return weeks;
 
 	}
-	
-
-
-	
-	@Transactional
-	public void applyUserDefaultsToRsvp(long weekId) {
-		Long currentUserId = 5L; // TODO: get from security
-
-		UserDefaults defaults = userDefRepo.findByUserId(currentUserId);
-		
-		
-	}
-	
-	
 
 	// public List<WeekRsvpPojo> getAllRsvp() {
 	//

@@ -22,8 +22,4 @@ public interface RsvpRepo extends JpaRepository<Rsvp, Long>{
 
 	@Query(nativeQuery = true, value = "SELECT r.* FROM rsvp r, days d WHERE r.day_id = d.day_id and d.day = :day order by d.day, r.location ")
 	List<Rsvp> findAllRsvpForDay(@Param("day") String day);
-
-	@Query(nativeQuery = true, value = "SELECT r.* FROM rsvp r, days d WHERE r.day_id = d.day_id and d.day >= :weekStart AND d.day <= :weekEnd AND r.user_id = :currentUserId")
-	List<Rsvp> findMyRsvpByWeek(@Param("weekId") String weekStart, @Param("weekEnd") String weekEnd,  @Param("currentUserId") Long currentUserId);
-
 }

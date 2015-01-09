@@ -2,10 +2,8 @@ C:\Java\Workspace\spring-async\src\main\java\hello\model\UserAud.java
 C:\Java\Workspace\spring-async\src\main\java\hello\json\WeekDayPojo.java
 C:\Java\Workspace\spring-async\src\main\java\hello\model\Role.java
 C:\Java\Workspace\spring-async\src\main\java\hello\model\UserCalc.java
-C:\Java\Workspace\spring-async\src\main\java\hello\json\TotalRsvpPojo.java
 C:\Java\Workspace\spring-async\src\main\java\hello\json\DayPojo.java
 C:\Java\Workspace\spring-async\src\main\java\hello\service\util\DateUtils.java
-C:\Java\Workspace\spring-async\src\main\java\hello\model\TotalRsvp.java
 C:\Java\Workspace\spring-async\src\main\java\hello\service\UserCalcService.java
 C:\Java\Workspace\spring-async\src\main\java\hello\model\UserDefault.java
 C:\Java\Workspace\spring-async\src\main\java\hello\repo\UserCalcRepo.java
@@ -21,7 +19,6 @@ C:\Java\Workspace\spring-async\src\main\java\hello\service\UserService.java
 C:\Java\Workspace\spring-async\src\main\java\hello\config\Application.java
 C:\Java\Workspace\spring-async\src\main\java\hello\repo\UserRepo.java
 C:\Java\Workspace\spring-async\src\main\java\hello\repo\RoleRepo.java
-C:\Java\Workspace\spring-async\src\main\java\hello\repo\TotalRsvpRepo.java
 C:\Java\Workspace\spring-async\src\main\java\hello\repo\RsvpRepo.java
 C:\Java\Workspace\spring-async\src\main\java\hello\model\Day.java
 C:\Java\Workspace\spring-async\src\main\java\hello\model\Rsvp.java

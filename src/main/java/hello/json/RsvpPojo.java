@@ -11,9 +11,6 @@ public class RsvpPojo {
 	private String location;
 	private Boolean thaliPicked;
 	
-//	private short adultCount;
-//	private short childCount;
-	
 	
 	public Long getRsvpId() {
 		return rsvpId;
