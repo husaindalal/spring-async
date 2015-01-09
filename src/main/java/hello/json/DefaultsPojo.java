@@ -1,36 +1,20 @@
 package hello.json;
 
-
-public class RsvpPojo {
-	private Long rsvpId;
-	private String day;
-	private String menu;
+public class DefaultsPojo {
+	private long userId;
 	private short thaliCount;
 	private short largeThaliCount;
 	private String thaliSize;
 	private String location;
-	private Boolean thaliPicked;
 	
 	private short adultCount;
 	private short childCount;
 	
-	public Long getRsvpId() {
-		return rsvpId;
+	public long getUserId() {
+		return userId;
 	}
-	public void setRsvpId(Long rsvpId) {
-		this.rsvpId = rsvpId;
-	}
-	public String getDay() {
-		return day;
-	}
-	public void setDay(String day) {
-		this.day = day;
-	}
-	public String getMenu() {
-		return menu;
-	}
-	public void setMenu(String menu) {
-		this.menu = menu;
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 	public short getThaliCount() {
 		return thaliCount;
@@ -38,7 +22,6 @@ public class RsvpPojo {
 	public void setThaliCount(short thaliCount) {
 		this.thaliCount = thaliCount;
 	}
-	
 	public short getLargeThaliCount() {
 		return largeThaliCount;
 	}
@@ -50,12 +33,6 @@ public class RsvpPojo {
 	}
 	public void setThaliSize(String thaliSize) {
 		this.thaliSize = thaliSize;
-	}
-	public Boolean getThaliPicked() {
-		return thaliPicked;
-	}
-	public void setThaliPicked(Boolean thaliPicked) {
-		this.thaliPicked = thaliPicked;
 	}
 	public String getLocation() {
 		return location;

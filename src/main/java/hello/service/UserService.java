@@ -1,12 +1,14 @@
 package hello.service;
 
+import hello.json.DefaultsPojo;
 import hello.json.UserPojo;
 import hello.model.Day;
 import hello.model.Role;
 import hello.model.Rsvp;
 import hello.model.User;
-import hello.model.UserDefault;
+import hello.model.UserDefaults;
 import hello.repo.DayRepo;
+import hello.repo.UserDefaultsRepo;
 import hello.repo.UserRepo;
 
 import java.util.ArrayList;
@@ -27,6 +29,9 @@ public class UserService {
 
 	@Autowired
 	private UserRepo userRepo;
+	
+	@Autowired
+	private UserDefaultsRepo userDefRepo;
 	
 	@Autowired
 	private DayRepo dayRepo;
@@ -55,7 +60,7 @@ public class UserService {
 		
 		user.addRole(new Role());
 		
-		UserDefault def = new UserDefault();
+		UserDefaults def = new UserDefaults();
 		def.setUser(user);
 		user.setUserDefault(def);
 
@@ -77,5 +82,30 @@ public class UserService {
 		return user;
 	}
 	
+	@Transactional
+	public DefaultsPojo getUserDefaults() throws Exception{
+		Long currentUserId = 5L; // TODO: get from security
 
+		UserDefaults defaults = userDefRepo.findByUserId(currentUserId);
+		
+		if(defaults == null ) {
+			throw new Exception("User defaults not found");
+		}
+		
+		DefaultsPojo defPojo = new DefaultsPojo();
+		defPojo.setUserId(defaults.getUser().getUserId());
+		defPojo.setThaliCount(defaults.getThaliCount());
+		defPojo.setLargeThaliCount(defaults.getLargeThaliCount());
+		defPojo.setThaliSize(defaults.getThaliSize());
+		defPojo.setLocation(defaults.getLocation());
+		defPojo.setAdultCount(defaults.getAdultCount());
+		defPojo.setChildCount(defaults.getChildCount());
+		
+		return defPojo;
+	}
+	
+	@Transactional
+	public void setUserDefaults(DefaultsPojo defaults) {
+		
+	}
 }

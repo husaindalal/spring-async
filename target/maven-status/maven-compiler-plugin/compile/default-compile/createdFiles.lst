@@ -2,9 +2,14 @@ hello\config\Application.class
 hello\repo\UserAudRepo.class
 hello\model\UserCalc.class
 hello\repo\UserCalcRepo.class
+hello\repo\TotalRsvpRepo.class
 hello\config\CustomUserDetailsService.class
 hello\json\UserPojo.class
 hello\config\SecurityConfig.class
+hello\json\Page.class
 hello\model\User.class
+hello\repo\UserDefaultsRepo.class
 hello\model\UserAud.class
+hello\json\DefaultsPojo.class
 hello\model\Role.class
+hello\model\UserDefaults.class

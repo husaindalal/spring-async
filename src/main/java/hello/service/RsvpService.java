@@ -9,9 +9,11 @@ import hello.model.Day;
 import hello.model.Rsvp;
 import hello.model.TotalRsvp;
 import hello.model.User;
+import hello.model.UserDefaults;
 import hello.repo.DayRepo;
 import hello.repo.RsvpRepo;
 import hello.repo.TotalRsvpRepo;
+import hello.repo.UserDefaultsRepo;
 import hello.repo.UserRepo;
 import hello.service.util.DateUtils;
 
@@ -37,6 +39,9 @@ public class RsvpService {
 	@Autowired
 	private UserRepo userRepo;
 
+	@Autowired
+	private UserDefaultsRepo userDefRepo;
+	
 	@Autowired
 	private DayRepo dayRepo;
 
@@ -201,7 +206,7 @@ public class RsvpService {
 			List<TotalRsvpPojo> totalRsvpPojos = new ArrayList<TotalRsvpPojo>();
 			for (TotalRsvp totalRsvp : totalRsvps) {
 				TotalRsvpPojo totalRsvpPojo = new TotalRsvpPojo();
-				totalRsvpPojo.setDay(totalRsvp.getDay());
+				totalRsvpPojo.setDay(dateUtil.dayToLongString( totalRsvp.getDay()));
 				totalRsvpPojo.setMenu(totalRsvp.getMenu());
 				totalRsvpPojo.setLocation(totalRsvp.getLocation());
 				totalRsvpPojo.setThaliCount(totalRsvp.getThaliCount());
@@ -219,6 +224,34 @@ public class RsvpService {
 		return weeks;
 
 	}
+	
+
+
+	/**
+	 * 
+	 * @param dayId - DayId of the first day of the week
+	 */
+	@Transactional
+	public void applyDefaultsToRsvp(LocalDate weekStart) {
+		Long currentUserId = 5L; // TODO: get from security
+
+		UserDefaults defaults = userDefRepo.findByUserId(currentUserId);
+		
+		//find all rsvps for the week
+		List<Rsvp> rsvps = rsvpRepo.findMyRsvpBetween(dateUtil.dayToDBString(weekStart),  dateUtil.dayToDBString(weekStart.plusDays(6)), currentUserId);
+		
+		for(Rsvp rsvp : rsvps) {
+			rsvp.setThaliCount(defaults.getThaliCount());
+			rsvp.setLargeThaliCount(defaults.getLargeThaliCount());
+			rsvp.setThaliSize(defaults.getThaliSize());
+			rsvp.setLocation(defaults.getLocation());
+			rsvp.setAdultCount(defaults.getAdultCount());
+			rsvp.setChildCount(defaults.getChildCount());
+		}
+		
+		rsvpRepo.save(rsvps);
+	}
+	
 
 	// public List<WeekRsvpPojo> getAllRsvp() {
 	//

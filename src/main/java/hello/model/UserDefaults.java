@@ -19,8 +19,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="user_defaults")
-@NamedQuery(name="UserDefault.findAll", query="SELECT u FROM UserDefault u")
-public class UserDefault implements Serializable {
+//@NamedQuery(name="UserDefault.findAll", query="SELECT u FROM UserDefault u")
+public class UserDefaults implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -39,6 +39,9 @@ public class UserDefault implements Serializable {
 	@Column(name="thali_count")
 	private short thaliCount;
 
+	@Column(name="large_thali_count")
+	private short largeThaliCount;
+
 	@Column(name="thali_size")
 	private String thaliSize;
 
@@ -46,16 +49,18 @@ public class UserDefault implements Serializable {
 	@OneToOne(mappedBy="userDefault")
 	private User user;
 
-	public UserDefault() {
+	public UserDefaults() {
 	}
 
 	@PrePersist
 	protected void init() {
 		thaliCount = 0;
+		largeThaliCount = 0;
 		thaliSize = "S";
 		adultCount = 0;
 		childCount = 0;
-		//location = "MASJID";
+		location = "MASJID";
+		
 	}
 
 	public Long getDefaultId() {
@@ -94,6 +99,14 @@ public class UserDefault implements Serializable {
 		return this.thaliCount;
 	}
 
+	public short getLargeThaliCount() {
+		return largeThaliCount;
+	}
+
+	public void setLargeThaliCount(short largeThaliCount) {
+		this.largeThaliCount = largeThaliCount;
+	}
+
 	public void setThaliCount(short thaliCount) {
 		this.thaliCount = thaliCount;
 	}
@@ -114,4 +127,5 @@ public class UserDefault implements Serializable {
 		this.user = user;
 	}
 
+	
 }

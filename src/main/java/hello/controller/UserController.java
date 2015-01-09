@@ -1,5 +1,6 @@
 package hello.controller;
 
+import hello.json.DefaultsPojo;
 import hello.json.UserPojo;
 import hello.model.User;
 import hello.service.UserService;
@@ -36,7 +37,7 @@ public class UserController {
 	 */
 	@RequestMapping("/createuser")
 	@ResponseBody
-	public String create(@RequestParam("name") String name, @RequestParam("email") String email) {
+	public String createUser(@RequestParam("name") String name, @RequestParam("email") String email) {
 		long start = System.currentTimeMillis();
 
 		User user = null;
@@ -52,6 +53,27 @@ public class UserController {
 		return "User succesfully created! " + user.getUserId();
 	}
 
+
+	@RequestMapping("/defaults")
+	@ResponseBody
+	public DefaultsPojo getUserDefaults() {
+		long start = System.currentTimeMillis();
+
+		DefaultsPojo defaults = null;
+
+		try {
+			defaults = userSvc.getUserDefaults();
+		} catch (Exception ex) {
+			LOG.error("Error creating the user: ", ex );
+			return null;
+		}
+		LOG.info("Total time: " + (System.currentTimeMillis() - start));
+
+		return defaults;
+	}
+
+
+	
 	/**
 	 * Delete the user having the passed id.
 	 * 

@@ -97,6 +97,48 @@ public class RsvpController {
 	}
 	
 	
+	/**
+	 * http://localhost:8080/allrsvp
+	 * @return
+	 */
+	@RequestMapping("/allrsvp")
+	@ResponseBody
+	public List<WeekRsvpPojo> getAllRsvp() {
+		long start = System.currentTimeMillis();
+
+		List<WeekRsvpPojo> weeks;
+		try {
+			weeks = rsvpSvc.getAllRsvp();
+		} catch (Exception ex) {
+			LOG.error("Error creating the days: ", ex );
+			return null;
+		}
+		LOG.info("Total time: " + (System.currentTimeMillis() - start));
+
+		return weeks ;
+	}
+
+	/**
+	 * http://localhost:8080/allrsvp
+	 * @return
+	 */
+	@RequestMapping("/applydefaults")
+	@ResponseBody
+	public String applyDefaultsToRsvp() {
+		long start = System.currentTimeMillis();
+
+		try {
+			 rsvpSvc.applyDefaultsToRsvp(LocalDate.now());
+		} catch (Exception ex) {
+			LOG.error("Error creating the days: ", ex );
+			return null;
+		}
+		LOG.info("Total time: " + (System.currentTimeMillis() - start));
+
+		return "Applied to day "+LocalDate.now() ;
+	}
+
+	
 //	/**
 //	 * http://localhost:8080/days
 //	 * @return
